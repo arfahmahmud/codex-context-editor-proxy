@@ -1,4 +1,4 @@
-# Codex Context Proxy v0.1.0
+# Codex Context Proxy v0.2.0
 
 A visual, editable context layer for Codex. Let AI edit AI's context with surgical precision, giving you more control and freedom over what Codex sees.
 
@@ -8,6 +8,8 @@ A visual, editable context layer for Codex. Let AI edit AI's context with surgic
 - Token overview for current context usage
 - Manual context inspection and editing panel
 - AI-assisted context compression for noisy tool output
+- More reliable compact/override handling after Codex `/compact`
+- Safer whole-node compression for tool-heavy assistant turns
 - Codex CLI support through `codex ctx proxy on/off/status`
 - Experimental Codex Desktop support through `codex ctx desktop on/off/status`
 - Windows installer with bundled Electron app and Python backend
@@ -17,7 +19,7 @@ A visual, editable context layer for Codex. Let AI edit AI's context with surgic
 Download and run:
 
 ```text
-Codex Context Proxy Setup 0.1.0.exe
+Codex Context Proxy Setup 0.2.0.exe
 ```
 
 After installation, open a new terminal and enable the proxy:

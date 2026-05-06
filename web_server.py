@@ -4774,12 +4774,12 @@ class ContextWorkbenchToolRegistry:
                 self._build_preview_selection_tool(),
                 self._build_node_detail_tool(),
                 self._build_find_items_tool(),
+                self._build_compress_nodes_tool(),
+                self._build_delete_nodes_tool(),
                 self._build_edit_items_tool(),
                 self._build_delete_item_tool(),
                 self._build_replace_item_tool(),
                 self._build_compress_item_tool(),
-                self._build_compress_nodes_tool(),
-                self._build_delete_nodes_tool(),
                 self._build_set_revision_summary_tool(),
             ]
         }
@@ -4810,6 +4810,18 @@ class ContextWorkbenchToolRegistry:
                 "status": "available",
             },
             {
+                "id": "compress_context_nodes",
+                "label": "Compress Nodes",
+                "description": "Whole-node compression: replace nodes, discussions, topics, or assistant turns with summary nodes, removing text, reasoning, tool calls, and tool outputs.",
+                "status": "available",
+            },
+            {
+                "id": "delete_context_nodes",
+                "label": "Delete Nodes",
+                "description": "Delete one or more nodes from the current working snapshot.",
+                "status": "available",
+            },
+            {
                 "id": "edit_context_items",
                 "label": "Edit Items",
                 "description": "Batch delete, replace, or compress provider item content selected by node/item/type filters.",
@@ -4831,18 +4843,6 @@ class ContextWorkbenchToolRegistry:
                 "id": "compress_context_item",
                 "label": "Compress Item",
                 "description": "Replace one item with a shorter version while keeping the same item type.",
-                "status": "available",
-            },
-            {
-                "id": "compress_context_nodes",
-                "label": "Compress Nodes",
-                "description": "Replace one or more nodes with a new summary node inside the current working snapshot.",
-                "status": "available",
-            },
-            {
-                "id": "delete_context_nodes",
-                "label": "Delete Nodes",
-                "description": "Delete one or more nodes from the current working snapshot.",
                 "status": "available",
             },
         ]
@@ -5609,7 +5609,11 @@ class ContextWorkbenchToolRegistry:
         return ContextWorkbenchToolDefinition(
             name="compress_context_nodes",
             label="Compress Nodes",
-            description="Replace one or more nodes with a new summary node inside the current working snapshot.",
+            description=(
+                "Whole-node compression. Replace one or more nodes with a new summary node inside the current working snapshot. "
+                "Use this when the user asks to compress a node, discussion, topic, or assistant turn; it removes the target nodes' "
+                "assistant text, reasoning, tool calls, and tool outputs from the snapshot."
+            ),
             parameters={
                 "type": "object",
                 "properties": {
@@ -5894,7 +5898,10 @@ def build_context_chat_runtime(
             "user 节点直接给全文；assistant 节点默认只给上下文地图折叠态同款首句预览，预览后面的内容你并不可见；需要协议层细节或完整内容时，再调用 get_context_node_details。",
             "Node Detail 里会给出 item #1 / item #2 / item #3 这样的当轮可编辑 item 视图。",
             "如果你要定位某类 item（例如所有 tool output、某类 tool call、某个文本片段），优先调用 find_context_items；它只返回预览和元数据，不会把大段内容塞进你的上下文。",
+            "用户说压缩某个节点、某段讨论、某个主题或某轮 assistant 内容时，默认是节点级压缩：优先调用 compress_context_nodes，用一个摘要节点替换整个目标节点，包含其中的 assistant 文本、reasoning、工具调用和工具输出。",
+            "不要把节点级压缩误做成只压缩 message item；如果目标节点里有工具输出，压缩整个节点通常就是为了移除这些大块工具输出。",
             "如果你要批量删除、改写、压缩 assistant text / tool call / tool output，优先调用 edit_context_items，用 selector 一次选中目标，再用 operation 一次完成；不要逐个 item 反复调用单项工具。",
+            "edit_context_items 只用于 item 级编辑：例如用户明确要求只压缩所有 tool output、只删除工具调用、或保留节点结构但缩短某类 item。",
             "edit_context_items 的 replace_content / compress_content 会保留原 item 的 type 和 call_id，只改可编辑内容；delete 会原子删除工具调用/输出配对，保证 Codex 输入仍然合法。",
             "delete_context_item / replace_context_item / compress_context_item 只用于少数精细单点修改，或者当用户明确要求按完整 provider item 改写时使用。",
             "选中只是强提示，不是门槛。显式 node_numbers 优先，其次是当前选中；如果都没有，可以用 target_hint 让系统帮你定位候选节点。",

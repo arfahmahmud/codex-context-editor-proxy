@@ -1511,6 +1511,54 @@ def test_context_workbench_compressed_nodes_stay_independent_after_cleaning() ->
     assert "assistant follow-up" not in json.dumps(cleaned, ensure_ascii=False)
 
 
+def test_context_workbench_compress_nodes_replaces_tool_heavy_node() -> None:
+    tool_output = "very long frontend scan output"
+    assistant_items = [
+        proxy_server.provider_message("assistant", "I will inspect the frontend."),
+        {
+            "type": "function_call",
+            "call_id": TOOL_CALL_ID,
+            "name": "shell_command",
+            "arguments": json.dumps({"command": "Get-ChildItem react_app -Force"}),
+        },
+        {
+            "type": "function_call_output",
+            "call_id": TOOL_CALL_ID,
+            "output": tool_output,
+        },
+        proxy_server.provider_message("assistant", "Frontend is React + Vite."),
+    ]
+    transcript = [
+        proxy_server.transcript_record(
+            "user",
+            "inspect frontend",
+            [proxy_server.provider_message("user", "inspect frontend")],
+        ),
+        proxy_server.transcript_record(
+            "assistant",
+            "I will inspect the frontend.\n\nFrontend is React + Vite.",
+            assistant_items,
+        ),
+    ]
+    draft = web_server.ContextWorkbenchDraft(web_server.normalize_transcript(transcript), [1])
+    nodes = draft._nodes_by_number([2])
+
+    draft.compress_nodes(
+        nodes,
+        summary_markdown="Frontend discussion compressed: React + Vite.",
+        style="tight summary",
+        title="",
+    )
+    committed = proxy_server.clean_transcript(draft.committed_transcript())
+    serialized = json.dumps(committed, ensure_ascii=False)
+
+    assert [record["role"] for record in committed] == ["user", "user"]
+    assert committed[1]["text"] == "Frontend discussion compressed: React + Vite."
+    assert "function_call" not in serialized
+    assert tool_output not in serialized
+    assert "I will inspect the frontend" not in serialized
+
+
 def test_context_workbench_hides_internal_prefix_nodes_from_editing() -> None:
     transcript = web_server.normalize_transcript(
         [
@@ -1598,6 +1646,7 @@ def main() -> None:
     test_compaction_visible_text_falls_back_to_encrypted_content()
     test_local_compact_response_replaces_transcript_with_readable_summary()
     test_context_workbench_compressed_nodes_stay_independent_after_cleaning()
+    test_context_workbench_compress_nodes_replaces_tool_heavy_node()
     test_context_workbench_hides_internal_prefix_nodes_from_editing()
 
     with tempfile.TemporaryDirectory() as temp_dir:
