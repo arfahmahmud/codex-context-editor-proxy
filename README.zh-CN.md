@@ -97,7 +97,7 @@ context window
 下载并运行 Windows 安装包：
 
 ```text
-Codex Context Proxy Setup 0.2.0.exe
+Codex Context Proxy Setup 0.3.0.exe
 ```
 
 安装完成后，重新打开一个终端，然后启用代理：
@@ -158,6 +158,7 @@ codex ctx desktop off
 
 ```powershell
 npm install
+npm run setup:python
 ```
 
 运行本地 Codex 流程：
@@ -187,7 +188,7 @@ npm run dist:win
 安装包会生成在：
 
 ```text
-release/Codex Context Proxy Setup 0.2.0.exe
+release/Codex Context Proxy Setup 0.3.0.exe
 ```
 
 ## 说明

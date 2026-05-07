@@ -1,9 +1,13 @@
-# Codex Context Proxy v0.2.0
+# Codex Context Proxy v0.3.0
 
 A visual, editable context layer for Codex. Let AI edit AI's context with surgical precision, giving you more control and freedom over what Codex sees.
 
 ## What's Included
 
+- Fixes for Python environment setup and dependency installation
+- `npm run setup:python` for creating and updating the local `.venv`
+- Test scripts now prefer the project `.venv` when available
+- Added Brotli and zstandard runtime dependencies for compressed responses
 - Visual context map for Codex sessions
 - Token overview for current context usage
 - Manual context inspection and editing panel
@@ -19,7 +23,7 @@ A visual, editable context layer for Codex. Let AI edit AI's context with surgic
 Download and run:
 
 ```text
-Codex Context Proxy Setup 0.2.0.exe
+Codex Context Proxy Setup 0.3.0.exe
 ```
 
 After installation, open a new terminal and enable the proxy:

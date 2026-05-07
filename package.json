@@ -1,12 +1,13 @@
 {
   "name": "hash-context-codex-lab",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Local context proxy and workbench companion for Codex.",
   "author": "",
   "main": "electron/context-window.cjs",
   "scripts": {
     "start": "npm run start:backend",
+    "setup:python": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"if (-not (Test-Path '.venv\\Scripts\\python.exe')) { python -m venv .venv }; .venv\\Scripts\\python.exe -m pip install --upgrade pip; .venv\\Scripts\\python.exe -m pip install -r requirements.txt\"",
     "start:backend": "if exist .venv\\Scripts\\python.exe (.venv\\Scripts\\python.exe web_server.py) else (python web_server.py)",
     "proxy": "if exist .venv\\Scripts\\python.exe (.venv\\Scripts\\python.exe proxy_server.py) else (python proxy_server.py)",
     "codex": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/codex-with-context.ps1",
@@ -27,13 +28,15 @@
     "dev": "vite --config react_app/vite.config.ts",
     "dev:react": "vite --config react_app/vite.config.ts",
     "typecheck": "tsc -p react_app/tsconfig.json --noEmit",
-    "test:compact-proxy": "python scripts/test_compact_proxy.py",
+    "test:compact-proxy": "if exist .venv\\Scripts\\python.exe (.venv\\Scripts\\python.exe scripts/test_compact_proxy.py) else (python scripts/test_compact_proxy.py)",
     "build": "npm run build:react",
     "build:react": "vite build --config react_app/vite.config.ts",
-    "build:python": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-python.ps1",
+    "build:python": "node scripts/build-python.mjs",
     "preview:react": "vite preview --config react_app/vite.config.ts",
     "pack:win": "npm run build:react && npm run build:python && electron-builder --win --dir",
-    "dist:win": "npm run build:react && npm run build:python && electron-builder --win nsis"
+    "dist:win": "npm run build:react && npm run build:python && electron-builder --win nsis",
+    "pack:mac": "npm run build:react && npm run build:python && electron-builder --mac --dir",
+    "dist:mac": "npm run build:react && npm run build:python && electron-builder --mac"
   },
   "dependencies": {
     "highlight.js": "^11.11.1",
@@ -72,7 +75,6 @@
       "requirements.txt",
       "RELEASE.md",
       ".env.example",
-      ".venv/**/*",
       "static/**/*",
       "react_app/dist/**/*",
       "python_dist/**/*",
@@ -85,6 +87,17 @@
       "target": "nsis",
       "signAndEditExecutable": false,
       "forceCodeSigning": false
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+      "category": "public.app-category.developer-tools",
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "identity": null
     },
     "nsis": {
       "oneClick": false,

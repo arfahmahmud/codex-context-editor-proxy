@@ -154,14 +154,18 @@ async function waitFor(port, pathname, label, timeoutMs = 30000) {
 }
 
 function pythonCommand(root) {
-  const localPython = path.join(root, '.venv', 'Scripts', 'python.exe');
-  return fs.existsSync(localPython) ? localPython : 'python';
+  const localPython = process.platform === 'win32'
+    ? path.join(root, '.venv', 'Scripts', 'python.exe')
+    : path.join(root, '.venv', 'bin', 'python');
+  const fallbackPython = process.platform === 'win32' ? 'python' : 'python3';
+  return fs.existsSync(localPython) ? localPython : fallbackPython;
 }
 
 function pythonServerCommand(root, scriptName, exeName) {
-  const bundledExe = path.join(root, 'python_dist', exeName, `${exeName}.exe`);
-  if (fs.existsSync(bundledExe)) {
-    return { command: bundledExe, args: [] };
+  const executableName = process.platform === 'win32' ? `${exeName}.exe` : exeName;
+  const bundledExecutable = path.join(root, 'python_dist', exeName, executableName);
+  if (fs.existsSync(bundledExecutable)) {
+    return { command: bundledExecutable, args: [] };
   }
 
   return { command: pythonCommand(root), args: [scriptName] };
